@@ -4,7 +4,7 @@
   "description": "CMS API server",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"，
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Yanting Larsen",
@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
-    "mongodb": "^2.2.25"
+    "mongodb": "^2.2.25",
+    "morgan": "^1.8.1"
   }
 }
