@@ -1,0 +1,53 @@
+<div *ngIf="page" class="row">
+  <div class="col-md-12">
+    <h2 *ngIf="page._id">Page Details</h2>
+    <h2 *ngIf="!page._id">New Page</h2>
+  </div>
+</div>
+
+<div *ngIf="page" class="row">
+  <form class="col-md-12">
+    <div class="form-group">
+      <label for="page-name">Name</label>
+      <input class="form-control" name="page-name" [(ngModel)]="page.name" placeholder="Name" />
+    </div>
+
+    <div class="form-group">
+      <label for="page-header">Header</label>
+      <input class="form-control" name="page-header" [(ngModel)]="page.header" placeholder="Header" />
+    </div>
+
+    <div class="form-group">
+      <label for="page-content">Content</label>
+      <textarea class="form-control" name="page-content" [(ngModel)]="page.content" placeholder="Content"></textarea>
+    </div>
+
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="page-visible" [(ngModel)]="page.visible" />
+        Visible
+      </label>
+    </div>
+
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="page-menu" [(ngModel)]="page.menu" />
+        Display in menu
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="page-parentId">Parent</label>
+      <select class="form-control" name="page-parentId" [(ngModel)]="page.parentId">
+        <option value="">None</option>
+        <option *ngFor="let page of pages"
+          value="{{page._id}}">
+          {{page.name}}
+        </option>
+      </select>
+    </div>
+    <button class="btn btn-primary" *ngIf="!page._id" (click)="createPage(page)">Create</button>
+    <button class="btn btn-info" *ngIf="page._id" (click)="updatePage(page)">Update</button>
+    <button class="btn btn-danger" *ngIf="page._id" (click)="deletePage(page._id)">Delete</button>
+  </form>
+</div>
