@@ -36,6 +36,82 @@ function handleError(res, reason, message, code) {
   res.status(code || 500).json({"error": message});
 }
 
+//admins
+
+/* "/api/admins"
+ * GET: finds all admins
+ * POST: creates a new admin
+ */
+
+ app.get("/api/admins", function(req, res) {
+   db.collection(ADMINS_COLLECTION).find({}).toArray(function(err, docs) {
+     if (err) {
+       handleError(res, err.message, "Failed to get admins");
+     } else {
+       res.status(200).json(docs);
+     }
+    });
+ });
+
+ app.post("/api/admins", function(req, res) {
+   var newPage = req.body;
+
+   if (!req.body.name) {
+     handleError(res, "Invalid user input", "Must provide a name.", 400);
+   }
+
+   db.collection(PAGES_COLLECTION).insertOne(newAdmin, function(err, doc) {
+     if (err) {
+       handleError(res, err.message, "Failed to create a new admin.");
+     } else {
+       res.status(201).json(doc.ops[0]);
+     }
+   });
+ });
+
+ /*  "/api/admins/:id"
+  *    GET: find admin by id
+  *    PUT: update admin by id
+  *    DELETE: deletes admin by id
+  */
+
+ app.get("/api/admins/:id", function(req, res) {
+   db.collection(ADMINS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+     if (err) {
+       handleError(res, err.message, "Failed to get admin");
+     } else {
+       res.status(200).json(doc);
+     }
+   });
+ });
+
+ app.put("/api/admins/:id", function(req, res) {
+    var updateDoc = req.body;
+    delete updateDoc._id;
+
+    db.collection(ADMINS_COLLECTION).updateOne({_id: new ObjectID(req.params.id) }, updateDoc, function(err, doc) {
+      if (err) {
+        handleError(res, err.message, "Failed to update admin");
+      } else {
+        updateDoc._id = req.params.id;
+        res.status(200).json(updateDoc);
+      }
+    });
+  });
+
+  app.delete("/api/admins/:id", function(req, res){
+    db.collection(ADMINS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+      if (err) {
+        handleError(res, err.message, "Failed to delete admin");
+      } else {
+        res.status(200).json(req.params.id);
+      }
+    });
+  });
+
+
+// pages
+
 /* "/api/pages"
  * GET: finds all pages
  * POST: creates a new page
@@ -101,6 +177,152 @@ app.put("/api/pages/:id", function(req, res) {
    db.collection(PAGES_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
      if (err) {
        handleError(res, err.message, "Failed to delete page");
+     } else {
+       res.status(200).json(req.params.id);
+     }
+   });
+ });
+
+//settings
+
+/* "/api/settings"
+ * GET: finds all settings
+ * POST: creates a new setting
+ */
+
+app.get("/api/settings", function(req, res) {
+  db.collection(SETTINGS_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get settings.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.post("/api/settings", function(req, res) {
+  var newPage = req.body;
+
+  if (!req.body.name) {
+    handleError(res, "Invalid user input", "Must provide a name.", 400);
+  }
+
+  db.collection(SETTINGS_COLLECTION).insertOne(newPage, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new settings.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+/*  "/api/settings/:id"
+ *    GET: find settings by id
+ *    PUT: update settings by id
+ *    DELETE: deletes settings by id
+ */
+
+app.get("/api/settings/:id", function(req, res) {
+  db.collection(SETTINGS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get settings");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
+
+app.put("/api/settings/:id", function(req, res) {
+   var updateDoc = req.body;
+   delete updateDoc._id;
+
+   db.collection(SETTINGS_COLLECTION).updateOne({_id: new ObjectID(req.params.id) }, updateDoc, function(err, doc) {
+     if (err) {
+       handleError(res, err.message, "Failed to update settings");
+     } else {
+       updateDoc._id = req.params.id;
+       res.status(200).json(updateDoc);
+     }
+   });
+ });
+
+ app.delete("/api/settings/:id", function(req, res){
+   db.collection(SETTINGS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+     if (err) {
+       handleError(res, err.message, "Failed to delete settings");
+     } else {
+       res.status(200).json(req.params.id);
+     }
+   });
+ });
+
+//slides
+
+/* "/api/slides"
+ * GET: finds all slides
+ * POST: creates a new slide
+ */
+
+app.get("/api/slides", function(req, res) {
+  db.collection(SLIDES_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get slides.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.post("/api/slides", function(req, res) {
+  var newPage = req.body;
+
+  if (!req.body.name) {
+    handleError(res, "Invalid user input", "Must provide a name.", 400);
+  }
+
+  db.collection(SLIDES_COLLECTION).insertOne(newPage, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create a new slide.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+/*  "/api/slides/:id"
+ *    GET: find slide by id
+ *    PUT: update slide by id
+ *    DELETE: deletes slide by id
+ */
+
+app.get("/api/slides/:id", function(req, res) {
+  db.collection(SLIDES_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get slide");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
+
+app.put("/api/slides/:id", function(req, res) {
+   var updateDoc = req.body;
+   delete updateDoc._id;
+
+   db.collection(SLIDES_COLLECTION).updateOne({_id: new ObjectID(req.params.id) }, updateDoc, function(err, doc) {
+     if (err) {
+       handleError(res, err.message, "Failed to update slide");
+     } else {
+       updateDoc._id = req.params.id;
+       res.status(200).json(updateDoc);
+     }
+   });
+ });
+
+ app.delete("/api/slides/:id", function(req, res){
+   db.collection(SLIDES_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+     if (err) {
+       handleError(res, err.message, "Failed to delete slide");
      } else {
        res.status(200).json(req.params.id);
      }
