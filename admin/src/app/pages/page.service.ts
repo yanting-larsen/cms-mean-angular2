@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class PageService {
-  private pagesUrl = 'http://localhost:9000/api/pages';
+  private pagesUrl = 'http://localhost:8080/api/pages';
 
   private headers = new Headers({
     'Access-Control-Allow-Origin': '*'

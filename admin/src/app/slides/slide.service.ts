@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class SlideService {
-  private slideUrl = 'http://localhost:9000/api/slides';
+  private slideUrl = 'http://localhost:8080/api/slides';
 
   private headers = new Headers({
     'Access-Control-Allow-Origin': '*'

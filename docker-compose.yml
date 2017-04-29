@@ -6,37 +6,23 @@ services:
       - api
     build: admin
     ports:
-      - "80"
+      - "80:80"
     environment:
       PORT: "80"
     volumes:
       - ./admin:/usr/src/app/
-    labels:
-      - "traefik.backend=admin"
-      - "traefik.frontend.rule=PathPrefix: /"
   api:
     depends_on:
       - db
     build: api
     ports:
-      - "8080"
+      - "8080:8080"
+    environment:
+      PORT: "8080"
     environment:
       MONGODB_URI: mongodb://db:27017
     volumes:
       - ./api:/usr/src/app/
-    labels:
-      - "traefik.backend=api"
-      - "traefik.frontend.rule=PathPrefix: /api"
-  proxy:
-    restart: always
-    image: traefik
-    command: --web --docker --docker.domain=docker.localhost
-    ports:
-      - "80:80"
-      - "8080:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /dev/null:/traefik.toml
   db:
     image: mongo
     volumes:

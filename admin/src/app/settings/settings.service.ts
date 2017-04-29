@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class SettingsService {
-  private settingsUrl = 'http://localhost:9000/api/settings';
+  private settingsUrl = 'http://localhost:8080/api/settings';
 
   private headers = new Headers({
     'Access-Control-Allow-Origin': '*'

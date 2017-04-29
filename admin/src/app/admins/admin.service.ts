@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class AdminService {
-  private adminsUrl = 'http://localhost:9000/api/admins';
+  private adminsUrl = 'http://localhost:8080/api/admins';
 
   private headers = new Headers({
     'Access-Control-Allow-Origin': '*'
