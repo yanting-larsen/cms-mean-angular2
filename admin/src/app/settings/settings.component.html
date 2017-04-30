@@ -1,3 +1,22 @@
-<p>
-  settings works!
-</p>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Settings</h2>
+  </div>
+</div>
+
+<div *ngIf="settings" class="row">
+  <form class="col-md-12">
+    <div class="form-group">
+      <label for="settings-companyName">Company Name</label>
+      <input class="form-control" name="settings-companyName" [(ngModel)]="settings.companyName" placeholder="Company Name" />
+    </div>
+
+    <div class="form-group">
+      <label for="settings-footer">Footer</label>
+      <input class="form-control" name="settings-footer" [(ngModel)]="settings.footer" placeholder="Footer" />
+    </div>
+
+    <button class="btn btn-info" (click)="updateSettings(settings)">Update</button>
+
+  </form>
+</div>

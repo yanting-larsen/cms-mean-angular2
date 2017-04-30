@@ -14,16 +14,16 @@ export class SettingsService {
   constructor (private http: Http) {}
 
   // get("/api/settings")
-  getSettings(): Promise<Settings[]> {
+  getSettings(): Promise<Settings> {
     return this.http.get(this.settingsUrl, this.headers)
                .toPromise()
-               .then(response => response.json() as Settings[])
+               .then(response => response.json() as Settings)
                .catch(this.handleError);
   }
 
-  // put("/api/settings/:id")
+  // put("/api/settings")
   updateSetings(putSettings: Settings): Promise<Settings> {
-    const putUrl = this.settingsUrl + '/' + putSettings._id;
+    const putUrl = this.settingsUrl;
     return this.http.put(putUrl, putSettings, this.headers)
                .toPromise()
                .then(response => response.json() as Settings)

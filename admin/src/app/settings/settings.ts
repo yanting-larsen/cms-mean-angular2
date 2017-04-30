@@ -1,5 +1,4 @@
 export class Settings {
-  _id?: string;
+  companyName: string;
   footer: string;
-  comany_name: string;
 }

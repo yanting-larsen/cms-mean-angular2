@@ -185,73 +185,34 @@ app.put("/api/pages/:id", function(req, res) {
 
 //settings
 
-/* "/api/settings"
- * GET: finds all settings
- * POST: creates a new setting
+/*  "/api/settings"
+ *    GET: get settings
+ *    PUT: update settings
  */
 
 app.get("/api/settings", function(req, res) {
-  db.collection(SETTINGS_COLLECTION).find({}).toArray(function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get settings.");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
-});
-
-app.post("/api/settings", function(req, res) {
-  var newPage = req.body;
-
-  if (!req.body.name) {
-    handleError(res, "Invalid user input", "Must provide a name.", 400);
-  }
-
-  db.collection(SETTINGS_COLLECTION).insertOne(newPage, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to create new settings.");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
-  });
-});
-
-/*  "/api/settings/:id"
- *    GET: find settings by id
- *    PUT: update settings by id
- *    DELETE: deletes settings by id
- */
-
-app.get("/api/settings/:id", function(req, res) {
-  db.collection(SETTINGS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+  db.collection(SETTINGS_COLLECTION).findOne({}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get settings");
     } else {
+      if (doc === null) {
+        doc = {};
+      }
+
       res.status(200).json(doc);
     }
   });
 });
 
-app.put("/api/settings/:id", function(req, res) {
+app.put("/api/settings", function(req, res) {
    var updateDoc = req.body;
-   delete updateDoc._id;
 
-   db.collection(SETTINGS_COLLECTION).updateOne({_id: new ObjectID(req.params.id) }, updateDoc, function(err, doc) {
+   db.collection(SETTINGS_COLLECTION)
+     .updateOne({}, updateDoc, { upsert: true }, function(err, doc) {
      if (err) {
        handleError(res, err.message, "Failed to update settings");
      } else {
-       updateDoc._id = req.params.id;
        res.status(200).json(updateDoc);
-     }
-   });
- });
-
- app.delete("/api/settings/:id", function(req, res){
-   db.collection(SETTINGS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
-     if (err) {
-       handleError(res, err.message, "Failed to delete settings");
-     } else {
-       res.status(200).json(req.params.id);
      }
    });
  });
