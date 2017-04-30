@@ -1,3 +1,23 @@
-<p>
-  admin-list works!
-</p>
+<div class="row">
+  <div class="col-md-5 col-md-offset-2">
+    <h2>Admins</h2>
+    <ul class="list-group">
+      <li class="list-group-item"
+        *ngFor="let admin of admins"
+        (click)="selectAdmin(admin)"
+        [class.active]="admin === selectedAdmin">
+        {{admin.userName}}
+      </li>
+    </ul>
+    <button class="btn btn-warning" (click)="createNewAdmin()">New</button>
+  </div>
+
+  <div class="col-md-5 col-md-offset-2">
+    <app-admin-details
+    [admin]="selectedAdmin"
+    [createHandler]="addAdmin"
+    [updateHandler]="updateAdmin"
+    [deleteHandler]="deleteAdmin">
+    </app-admin-details>
+  </div>
+</div>

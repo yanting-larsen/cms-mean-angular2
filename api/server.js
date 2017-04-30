@@ -54,13 +54,13 @@ function handleError(res, reason, message, code) {
  });
 
  app.post("/api/admins", function(req, res) {
-   var newPage = req.body;
+   var newAdmin = req.body;
 
-   if (!req.body.name) {
-     handleError(res, "Invalid user input", "Must provide a name.", 400);
+   if (!req.body.userName) {
+     handleError(res, "Invalid user input", "Must provide an user name.", 400);
    }
 
-   db.collection(PAGES_COLLECTION).insertOne(newAdmin, function(err, doc) {
+   db.collection(ADMINS_COLLECTION).insertOne(newAdmin, function(err, doc) {
      if (err) {
        handleError(res, err.message, "Failed to create a new admin.");
      } else {
