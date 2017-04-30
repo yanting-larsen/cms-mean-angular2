@@ -48,7 +48,7 @@ export class PageListComponent implements OnInit {
       menu: true
     };
 
-    // By default, a newly-created contact will have the selected state.
+    // By default, a newly-created page will have the selected state.
     this.selectPage(page);
   }
 

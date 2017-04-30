@@ -47,5 +47,4 @@ export class PageDetailsComponent implements OnInit {
         this.pages = pages;
       });
   }
-
 }
