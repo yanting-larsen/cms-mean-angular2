@@ -1,3 +1,22 @@
-<p>
-  slide-list works!
-</p>
+<div class="row">
+  <div class="col-md-5 col-md-offset-2">
+    <h2>Slides</h2>
+    <ul class="list-group">
+        <li class="list-group-item"
+          *ngFor="let slide of slides"
+          (click)="selectSlide(slide)"
+          [class.active]="slide === selectedSlide">
+          {{slide.image}}
+        </li>
+    </ul>
+    <button class="btn btn-warning" (click)="createNewSlide()">New</button>
+  </div>
+  <div class="col-md-5 col-md-offset-2">
+    <app-slide-new
+     [slide]="selectedSlide"
+     [createHandler]="addSlide"
+     [updateHandler]="updateSlide"
+     [deleteHandler]="deleteSlide">
+   </app-slide-new>
+  </div>
+</div>

@@ -235,13 +235,13 @@ app.get("/api/slides", function(req, res) {
 });
 
 app.post("/api/slides", function(req, res) {
-  var newPage = req.body;
+  var newSlide = req.body;
 
-  if (!req.body.name) {
-    handleError(res, "Invalid user input", "Must provide a name.", 400);
+  if (!req.body.image) {
+    handleError(res, "Invalid user input", "Must provide an image.", 400);
   }
 
-  db.collection(SLIDES_COLLECTION).insertOne(newPage, function(err, doc) {
+  db.collection(SLIDES_COLLECTION).insertOne(newSlide, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create a new slide.");
     } else {
