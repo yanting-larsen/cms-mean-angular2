@@ -13,6 +13,10 @@ import { AdminDetailsComponent } from './admins/admin-details/admin-details.comp
 import { AdminListComponent } from './admins/admin-list/admin-list.component';
 import { SlideListComponent } from './slides/slide-list/slide-list.component';
 import { SlideNewComponent } from './slides/slide-new/slide-new.component';
+import { LoginComponent } from './login/login.component';
+
+import { AuthGuard } from './auth.guard';
+import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +28,7 @@ import { SlideNewComponent } from './slides/slide-new/slide-new.component';
     AdminListComponent,
     SlideListComponent,
     SlideNewComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,10 @@ import { SlideNewComponent } from './slides/slide-new/slide-new.component';
     HttpModule,
     routing
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

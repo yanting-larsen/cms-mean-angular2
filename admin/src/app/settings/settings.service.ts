@@ -1,21 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Settings } from './settings';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class SettingsService {
   private settingsUrl = 'http://localhost:8080/api/settings';
 
-  private headers = new Headers({
-    'Access-Control-Allow-Origin': '*'
-  });
+  constructor (
+    private http: Http,
+    private authService: AuthService) {}
 
-  constructor (private http: Http) {}
+  requestOpts(): RequestOptions {
+    // Add authorization header with JWT token
+    const headers = new Headers({ 'Authorization': this.authService.token });
+    const options = new RequestOptions({ headers: headers });
+
+    return options;
+  }
 
   // get("/api/settings")
   getSettings(): Promise<Settings> {
-    return this.http.get(this.settingsUrl, this.headers)
+    return this.http.get(this.settingsUrl, this.requestOpts())
                .toPromise()
                .then(response => response.json() as Settings)
                .catch(this.handleError);
@@ -23,8 +31,7 @@ export class SettingsService {
 
   // put("/api/settings")
   updateSetings(putSettings: Settings): Promise<Settings> {
-    const putUrl = this.settingsUrl;
-    return this.http.put(putUrl, putSettings, this.headers)
+    return this.http.put(this.settingsUrl, putSettings, this.requestOpts)
                .toPromise()
                .then(response => response.json() as Settings)
                .catch(this.handleError);

@@ -1,21 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Slide } from './slide';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class SlideService {
   private slideUrl = 'http://localhost:8080/api/slides';
 
-  private headers = new Headers({
-    'Access-Control-Allow-Origin': '*'
-  });
+  constructor(
+    private http: Http,
+    private authService: AuthService) {}
 
-  constructor(private http: Http) {}
+  requestOpts(): RequestOptions {
+    // Add authorization header with JWT token
+    const headers = new Headers({ 'Authorization': this.authService.token });
+    const options = new RequestOptions({ headers: headers });
+
+    return options;
+  }
 
   // get("/api/slides")
   getSlides(): Promise<Slide[]> {
-    return this.http.get(this.slideUrl, this.headers)
+    return this.http.get(this.slideUrl, this.requestOpts())
                .toPromise()
                .then(response => response.json() as Slide[])
                .catch(this.handleError);
@@ -23,7 +31,7 @@ export class SlideService {
 
   // post("/api/slides")
   createSlide(newSlide: Slide): Promise<Slide> {
-    return this.http.post(this.slideUrl, newSlide, this.headers)
+    return this.http.post(this.slideUrl, newSlide, this.requestOpts())
                .toPromise()
                .then(response => response.json() as Slide)
                .catch(this.handleError);
@@ -31,7 +39,7 @@ export class SlideService {
 
   // delete("/api/slides/:id")
   deleteSlide(delSlideId: String): Promise<String> {
-    return this.http.delete(this.slideUrl + '/' + delSlideId, this.headers)
+    return this.http.delete(this.slideUrl + '/' + delSlideId, this.requestOpts())
                .toPromise()
                .then(response => response.json() as String)
                .catch(this.handleError);
@@ -40,7 +48,7 @@ export class SlideService {
   // put("/api/slides/:id")
   updateSlide(putSlide: Slide): Promise<Slide> {
     const putUrl = this.slideUrl + '/' + putSlide._id;
-    return this.http.put(putUrl, putSlide, this.headers)
+    return this.http.put(putUrl, putSlide, this.requestOpts())
                .toPromise()
                .then(response => response.json() as Slide)
                .catch(this.handleError);

@@ -30,7 +30,6 @@ export class AppComponent implements OnInit {
         while (currentRoute.children[0] !== undefined) {
           currentRoute = currentRoute.children[0];
         }
-        console.log(currentRoute.snapshot.data);
       })
   }
 }

@@ -1,10 +1,13 @@
 var express = require("express");
+var cors = require("cors");
 var bodyParser = require("body-parser");
+var jwt = require("jsonwebtoken");
 var morgan = require("morgan");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
 var app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan('combined'));
 
@@ -35,6 +38,38 @@ function handleError(res, reason, message, code) {
   console.log("ERROR:" + reason);
   res.status(code || 500).json({"error": message});
 }
+
+/*
+ * Add middleware. Because we defined the first parameter ( '/api' ), it will run
+ * only for urls that starts with '/api/*'
+ */
+app.use('/api', require('./middlewares/auth.js'));
+
+/*  "/api/auth"
+ *    POST: authenticate admin user
+ */
+app.post("/api/auth", function(req, res) {
+  // Check if the username and password is correct
+  if (req.body.userName === 'admin' && req.body.password === 'admin') {
+    res.json({
+      id: 1,
+      userName: 'admin',
+      token: jwt.sign({
+        id: 1
+      }, process.env.JWT_SECRET, { expiresIn: 60*60 })
+    });
+  } else {
+    /*
+     * if the username or password was wrong, return 401 (Unauthorized)
+     * status code and JSON error message
+     */
+    res.status(401).json({
+      error: {
+        message: "Wrong user name or password!"
+      }
+    });
+  }
+});
 
 //admins
 
@@ -280,7 +315,7 @@ app.put("/api/slides/:id", function(req, res) {
    });
  });
 
- app.delete("/api/slides/:id", function(req, res){
+ app.delete("/api/slides/:id", function(req, res) {
    db.collection(SLIDES_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
      if (err) {
        handleError(res, err.message, "Failed to delete slide");

@@ -1,23 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Page } from './page';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class PageService {
   private pagesUrl = 'http://localhost:8080/api/pages';
 
-  private headers = new Headers({
-    'Access-Control-Allow-Origin': '*'
-  });
+  constructor (
+    private http: Http,
+    private authService: AuthService) {}
 
-  constructor (private http: Http) {}
+  requestOpts(): RequestOptions {
+    // Add authorization header with JWT token
+    const headers = new Headers({ 'Authorization': this.authService.token });
+    const options = new RequestOptions({ headers: headers });
 
+    return options;
+  }
 
   // get("/api/pages")
   getPages(): Promise<Page[]> {
-    return this.http.get(this.pagesUrl, this.headers)
+    return this.http.get(this.pagesUrl, this.requestOpts())
                .toPromise()
                .then(response => response.json() as Page[])
                .catch(this.handleError);
@@ -25,7 +31,7 @@ export class PageService {
 
   // post("/api/pages")
   createPage(newPage: Page): Promise<Page> {
-    return this.http.post(this.pagesUrl, newPage, this.headers)
+    return this.http.post(this.pagesUrl, newPage, this.requestOpts())
                .toPromise()
                .then(response => response.json() as Page)
                .catch(this.handleError);
@@ -35,7 +41,7 @@ export class PageService {
 
   // delete("/api/contacts/:id")
   deletePage(delPageId: String): Promise<String> {
-    return this.http.delete(this.pagesUrl + '/' + delPageId, this.headers)
+    return this.http.delete(this.pagesUrl + '/' + delPageId, this.requestOpts())
                .toPromise()
                .then(response => response.json() as String)
                .catch(this.handleError);
@@ -44,7 +50,7 @@ export class PageService {
   // put("/api/pages/:id")
   updatePage(putPage: Page): Promise<Page> {
     const putUrl = this.pagesUrl + '/' + putPage._id;
-    return this.http.put(putUrl, putPage, this.headers)
+    return this.http.put(putUrl, putPage, this.requestOpts())
                .toPromise()
                .then(response => response.json() as Page)
                .catch(this.handleError);
