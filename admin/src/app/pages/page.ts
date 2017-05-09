@@ -5,7 +5,7 @@ export class Page {
   content: string;
   position: number;
   path: string;
-  parentId: number;
+  parentId: string;
   languages: Array<string>;
   visible: boolean;
   menu: boolean;

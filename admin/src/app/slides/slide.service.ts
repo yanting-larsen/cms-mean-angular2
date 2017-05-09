@@ -15,7 +15,7 @@ export class SlideService {
 
   requestOpts(): RequestOptions {
     // Add authorization header with JWT token
-    const headers = new Headers({ 'Authorization': this.authService.token });
+    const headers = new Headers({ 'Authorization': 'Bearer ' + this.authService.token });
     const options = new RequestOptions({ headers: headers });
 
     return options;
