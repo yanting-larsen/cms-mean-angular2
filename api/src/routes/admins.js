@@ -1,6 +1,7 @@
-import express from 'express';
-import adminCtrl from '../controllers/admin';
-import auth from '../middlewares/jwt';
+const express = require('express');
+
+const adminCtrl = require('../controllers/admin');
+const auth = require('../middlewares/jwt');
 
 const router = express.Router();
 
@@ -15,4 +16,4 @@ router.route('/:adminId')
 
 router.param('adminId', adminCtrl.load);
 
-export default router;
+module.exports = router;

@@ -41,7 +41,7 @@ export class AdminService {
   deleteAdmin(delAdminId: String): Promise<String> {
     return this.http.delete(this.adminsUrl + '/' + delAdminId, this.requestOpts())
                .toPromise()
-               .then(response => response.json() as String)
+               .then(() => delAdminId)
                .catch(this.handleError);
   }
 

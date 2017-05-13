@@ -1,0 +1,9 @@
+{
+  "db": {
+    "uri": "mongodb://db:27017/cmstest"
+  },
+  "jwt": {
+    "secret": "test",
+    "duration": "1h"
+  }
+}

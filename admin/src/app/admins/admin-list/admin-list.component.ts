@@ -39,6 +39,7 @@ export class AdminListComponent implements OnInit {
       userName: '',
       fullName: '',
       password: '',
+      confirmPassword: '',
       lastLoginTime: 0
     };
 
@@ -46,6 +47,7 @@ export class AdminListComponent implements OnInit {
   }
 
    deleteAdmin = (adminId: String) => {
+     console.log(adminId);
      const idx = this.getIndexOfAdmin(adminId);
      if (idx !== -1) {
        this.admins.splice(idx, 1);

@@ -1,0 +1,16 @@
+{
+  "server": {
+    "port": 8080
+  },
+  "db": {
+    "uri": "mongodb://db:27017/cms"
+  },
+  "jwt": {
+    "secret": "nosecret",
+    "duration": "7d"
+  },
+  "defaultAdmin": {
+    "userName": "admin",
+    "password": "admin"
+  }
+}

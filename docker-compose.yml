@@ -28,13 +28,8 @@ services:
     ports:
       - "8080:8080"
     environment:
-      ADMIN_USER: admin
-      ADMIN_PASSWORD: admin
+      NODE_ENV: production
       PORT: "8080"
-      NODE_ENV: development
-      MONGODB_URI: mongodb://db:27017/cms
-      JWT_SECRET: "Test"
-      JWT_DURATION: "7d"
     volumes:
       - ./api:/usr/src/app/
   db:

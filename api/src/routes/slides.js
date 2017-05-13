@@ -1,6 +1,7 @@
-import express from 'express';
-import slideCtrl from '../controllers/slide';
-import auth from '../middlewares/jwt';
+const express = require('express');
+
+const slideCtrl = require('../controllers/slide');
+const auth = require('../middlewares/jwt');
 
 const router = express.Router();
 
@@ -21,4 +22,4 @@ router.route('/:slideId')
 // Load slide when API with slideId route parameter is hit
 router.param('slideId', slideCtrl.load);
 
-export default router;
+module.exports = router;

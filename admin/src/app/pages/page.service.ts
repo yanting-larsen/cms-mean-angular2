@@ -43,7 +43,7 @@ export class PageService {
   deletePage(delPageId: String): Promise<String> {
     return this.http.delete(this.pagesUrl + '/' + delPageId, this.requestOpts())
                .toPromise()
-               .then(response => response.json() as String)
+               .then(() => delPageId)
                .catch(this.handleError);
   }
 

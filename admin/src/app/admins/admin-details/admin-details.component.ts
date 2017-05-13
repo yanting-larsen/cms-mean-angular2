@@ -22,13 +22,17 @@ export class AdminDetailsComponent implements OnInit {
 
   constructor (private adminService: AdminService) {}
 
-  createAdmin(admin: Admin) {
+  createAdmin(admin: Admin, isValid: boolean) {
+    if (!isValid) return;
+
     this.adminService.createAdmin(admin).then((newAdmin: Admin) => {
       this.createHandler(newAdmin);
     });
   }
 
-  updateAdmin(admin: Admin): void {
+  updateAdmin(admin: Admin, isValid: boolean): void {
+    if (!isValid) return;
+
     this.adminService.updateAdmin(admin).then((updateAdmin: Admin) => {
       this.updateHandler(updateAdmin);
     });
@@ -41,6 +45,10 @@ export class AdminDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAllAdmins();
+  }
+
+  private getAllAdmins(): void {
     this.adminService
       .getAdmins()
       .then((admins: Admin[]) => {

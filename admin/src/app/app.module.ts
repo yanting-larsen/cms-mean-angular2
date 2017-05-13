@@ -14,6 +14,7 @@ import { AdminListComponent } from './admins/admin-list/admin-list.component';
 import { SlideListComponent } from './slides/slide-list/slide-list.component';
 import { SlideNewComponent } from './slides/slide-new/slide-new.component';
 import { LoginComponent } from './login/login.component';
+import { EqualValidator } from './equal-validator.directive';
 
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
@@ -29,6 +30,7 @@ import { AuthService } from './auth.service';
     SlideListComponent,
     SlideNewComponent,
     LoginComponent,
+    EqualValidator
   ],
   imports: [
     BrowserModule,

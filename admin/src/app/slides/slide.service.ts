@@ -41,7 +41,7 @@ export class SlideService {
   deleteSlide(delSlideId: String): Promise<String> {
     return this.http.delete(this.slideUrl + '/' + delSlideId, this.requestOpts())
                .toPromise()
-               .then(response => response.json() as String)
+               .then(() => delSlideId)
                .catch(this.handleError);
   }
 

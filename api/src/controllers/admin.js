@@ -1,8 +1,7 @@
-import Admin from '../models/admin';
+const Admin = require('../models/admin');
 
 function load(req, res, next, id) {
     Admin.findById(id)
-        .select('-password')
         .exec()
         .then((admin) => {
             if (!admin) {
@@ -28,9 +27,9 @@ function create(req, res, next) {
         password: req.body.password,
         lastLoginTime: req.body.lastLoginTime
     })
-    .then((savedAdmin) => {
-        return res.json(savedAdmin);
-    }, (err) => next(err));
+        .then((savedAdmin) => {
+            return res.json(savedAdmin);
+        }, (err) => next(err));
 }
 
 function update(req, res, next) {
@@ -38,23 +37,22 @@ function update(req, res, next) {
     Object.assign(admin, req.body);
 
     admin.save()
-        .then(() => res.sendSatus(204),
-            (err) => next(err));
+        .then(() => res.sendStatus(204),
+              (err) => next(err));
 }
 
 function list(req, res, next) {
-   Admin.find()
-        .select('-password')
+    Admin.find()
         .exec()
         .then((admins) => res.json(admins),
-            (err) => next(err));
+              (err) => next(err));
 }
 
 function remove(req, res, next) {
     const admin = req.dbAdmin;
     admin.remove()
-        .then(() => res.sendSatus(204),
-            (err) => next(err));
+        .then(() => res.sendStatus(204),
+              (err) => next(err));
 }
 
-export default { load, get, create, update, list, remove };
+module.exports = { load, get, create, update, list, remove };

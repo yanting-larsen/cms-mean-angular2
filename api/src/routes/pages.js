@@ -1,13 +1,12 @@
-import express from 'express';
-import pageCtrl from '../controllers/page';
-import auth from '../middlewares/jwt';
+const express = require('express');
+const pageCtrl = require('../controllers/page');
+const auth = require('../middlewares/jwt');
 
 const router = express.Router();
 
 router.route('/')
-    // GET /api/pages - Get list of pages
+// GET /api/pages - Get list of pages
     .get(pageCtrl.list)
-
     // POST /api/pages -Create new task 
     .post(auth, pageCtrl.create);
 
@@ -22,4 +21,4 @@ router.route('/:pageId')
 // Load page when API with pageId route parameter is hit
 router.param('pageId', pageCtrl.load);
 
-export default router;
+module.exports = router;

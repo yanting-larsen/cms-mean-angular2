@@ -1,25 +1,26 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt-nodejs';
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt-nodejs');
 
 const AdminSchema = new mongoose.Schema({
-   userName: {
-       type: String,
-       required: true,
-       trim: true
-   },
-   fullName: {
-       type: String,
-       required: true,
-       trim: true
-   },
-   password: {
-       type: String,
-       required: true,
-       trim: true
-   },
-   lastLoginTime: {
-       type: Number
-   }
+    userName: {
+        type: String,
+        required: true,
+        trim: true,
+        index: true
+    },
+    fullName: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    password: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    lastLoginTime: {
+        type: Number
+    }
 });
 
 AdminSchema.pre('save', function(next) {
@@ -37,6 +38,12 @@ AdminSchema.pre('save', function(next) {
     });
 });
 
+AdminSchema.methods.toJSON = function() {
+    var obj = this.toObject();
+    delete obj.password;
+    return obj;
+};
+
 AdminSchema.methods.comparePassword = function (toCompare, done) {
     bcrypt.compare(toCompare, this.password, (err, isMatch) => {
         if (err) {
@@ -47,4 +54,4 @@ AdminSchema.methods.comparePassword = function (toCompare, done) {
     });
 };
 
-export default mongoose.model('Admin', AdminSchema);
+module.exports = mongoose.model('Admin', AdminSchema);

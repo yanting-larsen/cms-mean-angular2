@@ -30,8 +30,8 @@ export class SettingsService {
   }
 
   // put("/api/settings")
-  updateSetings(putSettings: Settings): Promise<Settings> {
-    return this.http.put(this.settingsUrl, putSettings, this.requestOpts)
+  updateSettings(putSettings: Settings): Promise<Settings> {
+    return this.http.put(this.settingsUrl, putSettings, this.requestOpts())
                .toPromise()
                .then(response => response.json() as Settings)
                .catch(this.handleError);

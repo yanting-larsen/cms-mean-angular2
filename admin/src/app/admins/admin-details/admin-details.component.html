@@ -6,29 +6,40 @@
 </div>
 
 <div *ngIf="admin" class="row">
-  <form class="col-md-12">
+  <form class="col-md-12" #f="ngForm">
     <div class="form-group">
       <label for="admin-username">User Name</label>
-      <input class="form-control" name="admin-username" [(ngModel)]="admin.userName" placeholder="User Name" />
+      <input class="form-control" name="admin-username" [(ngModel)]="admin.userName" placeholder="User Name" required minlength="2" />
     </div>
 
     <div class="form-group">
-      <label for="page-fullname">Full Name</label>
-      <input class="form-control" name="admin-fullname" [(ngModel)]="admin.fullName" placeholder="Full Name" />
+      <label for="admin-fullname">Full Name</label>
+      <input class="form-control" name="admin-fullname" [(ngModel)]="admin.fullName" placeholder="Full Name" required minlength="5" />
     </div>
 
     <div class="from-group">
       <label for="admin-password">Password</label>
-      <input class="form-control" name="admin-password" type="password" [(ngModel)]="admin.password" placeholder="Password" />
+      <input class="form-control" type="password"
+        name="admin-password" [(ngModel)]="admin.password"
+        placeholder="Password"
+        required
+        #password="ngModel" />
     </div>
 
     <div class="from-group">
       <label for="admin-confirmpassword">Confirm Password</label>
-      <input class="form-control" name="admin-confirmpassword" type="password" [(ngModel)]="admin.confirmPassword" placeholder="Password" />
+      <input class="form-control" type="password"
+        name="admin-confirmpassword" [(ngModel)]="admin.confirmPassword"
+        placeholder="Confirm Password"
+        required validateEqual="password"
+        #confirmPassword="ngModel" />
+      <small [hidden]="confirmPassword.valid || (confirmPassword.pristine && !f.submitted)"> 
+        Password mismatch
+      </small>
     </div>
 
-    <button class="btn btn-primary" *ngIf="!admin._id" (click)="createAdmin(admin)">Create</button>
-    <button class="btn btn-info" *ngIf="admin._id" (click)="updateAdmin(admin)">Update</button>
+    <button class="btn btn-primary" *ngIf="!admin._id" (click)="createAdmin(admin, f.valid)" [disabled]="!f.valid">Create</button>
+    <button class="btn btn-info" *ngIf="admin._id" (click)="updateAdmin(admin, f.valid)" [disabled]="!f.valid">Update</button>
     <button class="btn btn-danger" *ngIf="admin._id" (click)="deleteAdmin(admin._id)">Delete</button>
 
   </form>

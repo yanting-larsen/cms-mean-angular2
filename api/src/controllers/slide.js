@@ -1,12 +1,12 @@
-import Slide from '../models/slide';
+const Slide = require('../models/slide');
 
 function load(req, res, next, id) {
     slide.findById(id)
-    .exec()
-    .then((slide) => {
-        req.dbSlide = slide;
-        return next();
-    }, (err) => next(err));
+        .exec()
+        .then((slide) => {
+            req.dbSlide = slide;
+            return next();
+        }, (err) => next(err));
 }
 
 function get(req, res) {
@@ -18,9 +18,9 @@ function create(req, res, next) {
         image: req.body.image,
         position: req.body.position
     })
-    .then((savedSlide) => {
-        return res.json(savedSlide);
-    }, (err) => next(err));
+        .then((savedSlide) => {
+            return res.json(savedSlide);
+        }, (err) => next(err));
 }
 
 function update(req, res, next) {
@@ -29,21 +29,21 @@ function update(req, res, next) {
 
     slide.save()
         .then(() => res.sendStatus(204),
-            (err) => next(err));
+              (err) => next(err));
 }
 
 function list(req, res, next) {
     Slide.find()
         .exec()
         .then((slides) => res.json(slides),
-            (err) => next(err));
+              (err) => next(err));
 }
 
 function remove(req, res, next) {
     const side = req.dbSlide;
     slide.remove()
         .then(() => res.sendStatus(204),
-            (err) => next(err));
+              (err) => next(err));
 }
 
-export default { load, get, create, update, list, remove };
+module.exports = { load, get, create, update, list, remove };

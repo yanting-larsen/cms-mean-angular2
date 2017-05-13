@@ -39,7 +39,7 @@
     <div class="form-group">
       <label for="page-parentId">Parent</label>
       <select class="form-control" name="page-parentId" [(ngModel)]="page.parentId">
-        <option value="">None</option>
+        <option value>None</option>
         <option *ngFor="let page of pages"
           value="{{page._id}}">
           {{page.name}}

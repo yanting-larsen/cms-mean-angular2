@@ -8,19 +8,17 @@ import { SettingsService } from './settings.service';
   styleUrls: ['./settings.component.css'],
   providers: [SettingsService]
 })
+
 export class SettingsComponent implements OnInit {
 
   @Input()
   settings: Settings;
 
-  @Input()
-  updateHandler: Function;
-
   constructor (private settingsService: SettingsService) {}
 
-  updateSetings(settings: Settings): void {
-    this.settingsService.updateSetings(settings).then((updateSetings: Settings) => {
-      this.updateHandler(updateSetings);
+  updateSettings(settings: Settings): void {
+    this.settingsService.updateSettings(settings).then((updateSettings: Settings) => {
+      return this.settings;
     });
   }
 
