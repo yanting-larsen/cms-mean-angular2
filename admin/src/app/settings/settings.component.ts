@@ -8,7 +8,6 @@ import { SettingsService } from './settings.service';
   styleUrls: ['./settings.component.css'],
   providers: [SettingsService]
 })
-
 export class SettingsComponent implements OnInit {
 
   @Input()

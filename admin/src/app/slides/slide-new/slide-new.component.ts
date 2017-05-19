@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Slide } from '../slide';
 import { SlideService } from '../slide.service';
 
-
 @Component({
   selector: 'app-slide-new',
   templateUrl: './slide-new.component.html',

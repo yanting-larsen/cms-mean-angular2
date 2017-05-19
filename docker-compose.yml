@@ -1,6 +1,16 @@
 version: '2'
 
 services:
+  web:
+    depends_on:
+      - api
+    build: web
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+    volumes:
+      - ./web:/usr/src/app/
   admin:
     depends_on:
       - api

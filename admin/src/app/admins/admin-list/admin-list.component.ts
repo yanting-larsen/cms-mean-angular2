@@ -9,7 +9,6 @@ import { AdminDetailsComponent } from '../admin-details/admin-details.component'
   styleUrls: ['./admin-list.component.css'],
   providers: [AdminService]
 })
-
 export class AdminListComponent implements OnInit {
 
   admins: Admin[];

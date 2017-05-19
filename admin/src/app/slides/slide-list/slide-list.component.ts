@@ -10,7 +10,6 @@ import { SlideNewComponent } from '../slide-new/slide-new.component';
   providers: [SlideService]
 })
 export class SlideListComponent implements OnInit {
-
   slides: Slide[];
   selectedSlide: Slide;
 

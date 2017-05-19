@@ -9,9 +9,7 @@ import { PageDetailsComponent } from '../page-details/page-details.component';
   styleUrls: ['./page-list.component.css'],
   providers: [PageService]
 })
-
 export class PageListComponent implements OnInit {
-
   pages: Page[];
   selectedPage: Page;
 
