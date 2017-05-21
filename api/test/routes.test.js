@@ -29,7 +29,8 @@ describe('POST /api/pages - create a new page', () => {
         name: 'Main',
         header: 'Welcome',
         content: 'Lorem ipsum dolor sit amet.',
-        parentId: ''
+        parentId: '',
+        position: 2
     };
 
     beforeAll(() => {
@@ -62,11 +63,12 @@ describe('POST /api/pages - create a new page', () => {
                 expect(newPage.name).toBe(page.name);
                 expect(newPage.header).toBe(page.header);
                 expect(newPage.content).toBe(page.content);
-                expect(newPage.position).toBe(0);
                 expect(newPage.visible).toBe(true);
                 expect(newPage.menu).toBe(true);
+                expect(newPage.position).toBe(page.position);
                 expect(newPage.parentId).toBe(undefined);
                 expect(newPage.path).toBe('/' + newPage._id);
+                expect(newPage.sortPath).toBe('/' + newPage.position);
             });
     });
 
@@ -83,10 +85,10 @@ describe('POST /api/pages - create a new page', () => {
             .send(page)
             .then((res) => {
                 expect(res.status).toBe(200);
-                return res.body._id;
+                return res.body;
             })
-            .then((parentId) => {
-                subPage.parentId = parentId;
+            .then((parent) => {
+                subPage.parentId = parent._id;
 
                 return request(app)
                     .post('/api/pages')
@@ -98,11 +100,12 @@ describe('POST /api/pages - create a new page', () => {
                         expect(newPage.name).toBe(subPage.name);
                         expect(newPage.header).toBe(subPage.header);
                         expect(newPage.content).toBe(subPage.content);
-                        expect(newPage.position).toBe(0);
                         expect(newPage.visible).toBe(true);
                         expect(newPage.menu).toBe(true);
-                        expect(newPage.parentId).toBe(parentId);
-                        expect(newPage.path).toBe('/' + parentId + '/' + newPage._id);
+                        expect(newPage.position).toBe(0);
+                        expect(newPage.parentId).toBe(parent._id);
+                        expect(newPage.path).toBe('/' + parent._id + '/' + newPage._id);
+                        expect(newPage.sortPath).toBe('/' + parent.position + '/' + newPage.position);
                     });
 
             });

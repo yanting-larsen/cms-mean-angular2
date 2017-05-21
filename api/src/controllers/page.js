@@ -43,6 +43,7 @@ function update(req, res, next) {
 
 function list(req, res, next) {
     Page.find()
+        .sort({ sortPath: 1, name: 1 })
         .exec()
         .then((pages) => res.json(pages),
               (err) => next(err));

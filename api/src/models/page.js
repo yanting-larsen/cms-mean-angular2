@@ -16,10 +16,6 @@ const PageSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    position: {
-        type: Number,
-        default: 0
-    },
     visible: {
         type: Boolean,
         default: true
@@ -28,30 +24,43 @@ const PageSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    position: {
+        type: Number,
+        default: 0
+    },
     parentId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Page'
     },
     path: {
-        type: String
+        type: String,
+        index: true
+    },
+    sortPath: {
+        type: String,
+        index: true
     }
 });
+PageSchema.index({ sortPath: 1, name: 1 }, { unique: true });
 
 PageSchema.pre('save', function(next) {
     let page = this;
 
-    if (!page.isModified('parentId')) {
+    if (!page.isModified('parentId') && !page.isModified('position')) {
         return next();
     }
 
     if (!page.parentId) {
         page.path = '/' + page._id;
+        page.sortPath = '/' + page.position;
+
         next();
     } else {
         page.constructor.findById(page.parentId)
             .exec()
             .then((parent) => {
                 page.path = parent.path + '/' + page._id;
+                page.sortPath = parent.sortPath + '/' + page.position;
                 next();
             }).catch((err) => {
                 next(err);
