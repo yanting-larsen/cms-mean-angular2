@@ -6,6 +6,7 @@ const app = require('../src/app');
 const initDb = require('../src/db');
 
 const Admin = require('../src/models/admin');
+const Page = require('../src/models/page');
 
 initDb(db => {
     db.on('error', (err) => {
@@ -69,6 +70,7 @@ describe('POST /api/pages - create a new page', () => {
                 expect(newPage.parentId).toBe(undefined);
                 expect(newPage.path).toBe('/' + newPage._id);
                 expect(newPage.sortPath).toBe('/' + newPage.position);
+                expect(newPage.slug).toBe('/main');
             });
     });
 
@@ -106,8 +108,39 @@ describe('POST /api/pages - create a new page', () => {
                         expect(newPage.parentId).toBe(parent._id);
                         expect(newPage.path).toBe('/' + parent._id + '/' + newPage._id);
                         expect(newPage.sortPath).toBe('/' + parent.position + '/' + newPage.position);
+                        expect(newPage.slug).toBe('/main/subpage');
                     });
 
+            });
+    });
+});
+
+describe('GET /api/pages/show - get a page to show', () => {
+    let page = {
+        name: 'A Page',
+        header: 'Welcome',
+        content: 'Lorem ipsum dolor sit amet.'
+    };
+
+    beforeAll(() => {
+        return Page.create(page).then(() => {
+            return Page.create({
+                name: 'Another Page',
+                header: 'Other',
+                content: 'Other page.'
+            }).then(() => {
+                return;
+            });
+        });
+    });
+
+    it('should show a page', () => {
+        return request(app)
+            .get('/api/pages/show?slug=/a-page')
+            .then((res) => {
+                expect(res.status).toBe(200);
+                const showPage = res.body;
+                expect(showPage.name).toBe(page.name);
             });
     });
 });

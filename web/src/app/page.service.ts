@@ -10,17 +10,17 @@ export class PageService {
   constructor(
     private http: Http) {}
 
-  // get("/api/pages")
-  getPages(): Promise<Page[]> {
-    return this.http.get(this.pagesUrl)
+  // get("/api/pages/navigation")
+  getNavigation(): Promise<Page[]> {
+    return this.http.get(this.pagesUrl + '/navigation')
                .toPromise()
                .then(response => response.json() as Page[])
                .catch(this.handleError);
   }
 
-  // get("/api/pages/:id")
-  getPage(getPageId: String): Promise<Page> {
-    const getUrl = this.pagesUrl + '/' + getPageId;
+  // get("/api/pages/show?slug=...")
+  getPage(slug: String): Promise<Page> {
+    const getUrl = this.pagesUrl + '/show?slug=' + slug;
     return this.http.get(getUrl)
                .toPromise()
                .then(response => response.json() as Page)

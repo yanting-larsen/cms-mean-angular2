@@ -1,20 +1,7 @@
 <app-navigation></app-navigation>
 
 <div id="content">
-  <main>
-    <h1>Web Developing</h1>
-
-    <div id="slideshow">
-      <app-slideshow [interval]="NextSlideInterval" [noWrap]="noLoopSlides">
-        <app-slide *ngFor="let slide of slides"
-                [active]="slide.active">
-          <img [src]="slide.image" style="margin:auto;">
-        </app-slide>
-      </app-slideshow>
-    </div>
-
-    <app-page></app-page>
-  </main>
+  <router-outlet></router-outlet>
 </div>
 
 <footer>

@@ -9,4 +9,5 @@ export class Page {
   languages: Array<string>;
   visible: boolean;
   menu: boolean;
+  slideshow: boolean;
 }

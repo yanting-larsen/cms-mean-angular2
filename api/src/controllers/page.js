@@ -14,7 +14,7 @@ function get(req, res) {
 }
 
 function create (req, res, next) {
-    let parentId;
+    let parentId = null;
     if (req.body.parentId !== "") {
         parentId = req.body.parentId;
     }
@@ -26,15 +26,21 @@ function create (req, res, next) {
         position: req.body.position,
         parentId: parentId,
         visible: req.body.visible,
-        menu: req.body.menu
+        menu: req.body.menu,
+        slideshow: req.body.slideshow
     }).then((savedPage) => {
         return res.json(savedPage);
     }, (err) => next(err));
 }
 
 function update(req, res, next) {
+    let data = req.body;
+    if (req.body.parentId === "") {
+        data.parentId = null;
+    }
+
     const page = req.dbPage;
-    Object.assign(page, req.body);
+    Object.assign(page, data);
 
     page.save()
         .then(() => res.sendStatus(204),
@@ -57,4 +63,25 @@ function remove(req, res, next) {
               (err) => next(err));
 }
 
-module.exports = { load, get, create, update, list, remove };
+function navigation(req, res, next) {
+    Page.find({ menu: true, visible: true })
+        .sort({ sortPath: 1, name: 1 })
+        .exec()
+        .then((pages) => res.json(pages),
+              (err) => next(err));
+}
+
+function show(req, res, next) {
+    const slug = req.query.slug;
+
+    Page.findOne({ visible: true, slug: slug })
+        .then((page) => {
+            if (page) {
+                return res.json(page);
+            } else {
+                res.sendStatus(404);
+            }
+        }, (err) => next(err));
+}
+
+module.exports = { load, get, create, update, list, remove, navigation, show };

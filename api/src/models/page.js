@@ -1,5 +1,14 @@
 const mongoose = require('mongoose');
 
+slugify = function(text) {
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-')     // Replace spaces with -
+    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+    .replace(/\-\-+/g, '-')   // Replace multiple - with single -
+    .replace(/^-+/, '')       // Trim - from start of text
+    .replace(/-+$/, '');      // Trim - from end of text
+}
+
 const PageSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -24,6 +33,10 @@ const PageSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    slideshow: {
+        type: Boolean,
+        default: false
+    },
     position: {
         type: Number,
         default: 0
@@ -39,6 +52,11 @@ const PageSchema = new mongoose.Schema({
     sortPath: {
         type: String,
         index: true
+    },
+    slug: {
+        type: String,
+        index: true,
+        unique: true
     }
 });
 PageSchema.index({ sortPath: 1, name: 1 }, { unique: true });
@@ -53,6 +71,7 @@ PageSchema.pre('save', function(next) {
     if (!page.parentId) {
         page.path = '/' + page._id;
         page.sortPath = '/' + page.position;
+        page.slug = '/' + slugify(page.name);
 
         next();
     } else {
@@ -61,6 +80,8 @@ PageSchema.pre('save', function(next) {
             .then((parent) => {
                 page.path = parent.path + '/' + page._id;
                 page.sortPath = parent.sortPath + '/' + page.position;
+                page.slug = parent.slug + '/' + slugify(page.name);
+
                 next();
             }).catch((err) => {
                 next(err);

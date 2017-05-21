@@ -1,4 +1,4 @@
-<a>{{ page.name }}</a>
+<a href="{{ page.slug }}">{{ page.name }}</a>
 <ul *ngIf="getMenu(page._id)">
   <li *ngFor="let node of getMenu(page._id)">
     <app-tree-node

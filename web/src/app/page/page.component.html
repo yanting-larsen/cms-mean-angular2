@@ -1,8 +1,14 @@
-<div class="paragragh">
-  <p>We want to push your business forward.
-  <br>
-  That’s why we create unique and useful digital experiences, that makes your company stand out from the crowd.
-  At WMYL we also invest in people.
-  <br>
-  Allowing great talent to do great work is our philosophy, business-model and promise.</p>
-</div>
+<main>
+  <h1 *ngIf="header">{{ header }}</h1>
+
+  <div *ngIf="displaySlideshow" id="slideshow">
+    <app-slideshow [interval]="NextSlideInterval" [noWrap]="noLoopSlides">
+      <app-slide *ngFor="let slide of slides"
+              [active]="slide.active">
+        <img [src]="slide.image" style="margin:auto;">
+      </app-slide>
+    </app-slideshow>
+  </div>
+
+  <p *ngFor="let content of contents">{{ content }}</p>
+</main>
