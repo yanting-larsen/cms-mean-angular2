@@ -6,7 +6,7 @@
           *ngFor="let slide of slides"
           (click)="selectSlide(slide)"
           [class.active]="slide === selectedSlide">
-          {{slide.image}}
+          <img src="{{ mediaUrl }}/{{ slide.fileName }}" />
         </li>
     </ul>
     <button class="btn btn-warning" (click)="createNewSlide()">New</button>

@@ -10,6 +10,8 @@ import { SlideNewComponent } from '../slide-new/slide-new.component';
   providers: [SlideService]
 })
 export class SlideListComponent implements OnInit {
+  mediaUrl: String = 'http://localhost:8080/media/uploads';
+
   slides: Slide[];
   selectedSlide: Slide;
 
@@ -36,6 +38,7 @@ export class SlideListComponent implements OnInit {
   createNewSlide() {
     const slide: Slide = {
       image: '',
+      fileName: '',
       position: 0
     };
 

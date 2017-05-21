@@ -8,8 +8,9 @@ const routes = require('./routes');
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '1mb' }));
+app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
+app.use('/media', express.static('media'));
 
 app.use(morgan('dev'));
 

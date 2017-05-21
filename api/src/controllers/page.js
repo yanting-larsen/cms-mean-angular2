@@ -43,7 +43,7 @@ function update(req, res, next) {
     Object.assign(page, data);
 
     page.save()
-        .then(() => res.sendStatus(204),
+        .then((p) => res.json(p),
               (err) => next(err));
 }
 

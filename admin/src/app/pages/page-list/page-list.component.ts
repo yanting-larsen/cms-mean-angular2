@@ -44,7 +44,7 @@ export class PageListComponent implements OnInit {
       languages: [],
       visible: true,
       menu: true,
-      slideshow: false
+      start: false
     };
 
     // By default, a newly-created page will have the selected state.

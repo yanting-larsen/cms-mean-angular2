@@ -8,7 +8,7 @@ function load(req, res, next, id) {
                 return res.status(404).json({
                     error: {
                         message: "Admin not found"
-                    } 
+                    }
                 });
             }
             req.dbAdmin = admin;
@@ -37,7 +37,7 @@ function update(req, res, next) {
     Object.assign(admin, req.body);
 
     admin.save()
-        .then(() => res.sendStatus(204),
+        .then((a) => res.json(a),
               (err) => next(err));
 }
 

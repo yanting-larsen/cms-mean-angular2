@@ -12,6 +12,8 @@ export class SlideNewComponent implements OnInit {
   @Input()
   slide: Slide;
 
+  imageData: string;
+
   @Input()
   createHandler: Function;
   @Input()
@@ -21,23 +23,25 @@ export class SlideNewComponent implements OnInit {
 
   constructor (private slideService: SlideService) {}
 
-    createSlide(slide: Slide) {
-      this.slideService.createSlide(slide).then((newSlide: Slide) => {
-        this.createHandler(newSlide);
-      });
-    }
+  createSlide(slide: Slide) {
+    slide.image = this.imageData;
 
-    updateSlide(slide: Slide): void {
-      this.slideService.updateSlide(slide).then((updatedSlide: Slide) => {
-        this.updateSlide(updatedSlide);
-      });
-    }
+    this.slideService.createSlide(slide).then((newSlide: Slide) => {
+      this.createHandler(newSlide);
+    });
+  }
 
-    deleteSlide(slideId: String): void {
-      this.slideService.deleteSlide(slideId).then((deletedSlideId: String) => {
-        this.deleteHandler(deletedSlideId);
-      });
-    }
+  updateSlide(slide: Slide): void {
+    this.slideService.updateSlide(slide).then((updatedSlide: Slide) => {
+      this.updateHandler(updatedSlide);
+    });
+  }
+
+  deleteSlide(slideId: String): void {
+    this.slideService.deleteSlide(slideId).then((deletedSlideId: String) => {
+      this.deleteHandler(deletedSlideId);
+    });
+  }
 
   ngOnInit() {
     this.slideService
@@ -45,5 +49,20 @@ export class SlideNewComponent implements OnInit {
         .then((slides: Slide[]) => {
           this.slides = slides;
         });
+  }
+
+  handleImageFile($event) {
+    this.readImageFile($event.target);
+  }
+
+  readImageFile(inputValue: any) {
+    const file: File = inputValue.files[0];
+    const reader: FileReader = new FileReader();
+
+    reader.onloadend = (e) => {
+      this.imageData = btoa(reader.result)
+    }
+
+    reader.readAsBinaryString(file);
   }
 }
