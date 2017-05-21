@@ -5,15 +5,19 @@ import { Observable } from 'rxjs/Rx';
 import { Page } from '../page';
 import { PageService } from '../page.service';
 
+import { Slide } from '../slide';
+import { SlideService } from '../slide.service';
+
 import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-page',
   templateUrl: './page.component.html',
   styleUrls: ['./page.component.css'],
-  providers: [PageService]
+  providers: [PageService, SlideService]
 })
 export class PageComponent implements OnInit {
+  private mediaUrl: String = 'http://localhost:8080/media/uploads';
   private url: String;
   private header: String;
   private contents: String[] = [];
@@ -28,10 +32,9 @@ export class PageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private pageService: PageService
-  ) {
+    private pageService: PageService,
+    private slideService: SlideService) {
     this.url = '/' + route.snapshot.url.join('/');
-    this.initSlides();
   }
 
   ngOnInit() {
@@ -40,14 +43,22 @@ export class PageComponent implements OnInit {
     } else {
       this.getPage(this.url);
     }
+
+    this.initSlides();
   }
 
   private initSlides() {
-    this.slides.push(
-      { image: 'http://static.hasselblad.com/uploads/2014/11/Maasai-Moran2-666x1000.jpg' },
-      { image: 'http://static.hasselblad.com/uploads/2014/11/Maasai-Woman4-666x1000.jpg' },
-      { image: 'http://static.hasselblad.com/uploads/2014/11/B_0127-copy-749x1000.jpg' }
-    );
+    this.slideService
+      .getSlides()
+      .then((slides: Slide[]) => {
+        slides.forEach((slide) => {
+          this.slides.push(
+            {
+              image: this.mediaUrl + "/" + slide.fileName
+            }
+          );
+        })
+      });
   }
 
   private getPage(url: String) {

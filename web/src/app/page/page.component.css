@@ -2,3 +2,12 @@ main {
   padding: 8px;
   background-color: #fff;
 }
+
+#slideshow {
+  height: 250px;
+  overflow: hidden;
+}
+
+#slideshow img {
+  width: 100%;
+}
