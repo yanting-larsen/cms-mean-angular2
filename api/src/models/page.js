@@ -33,7 +33,7 @@ const PageSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    slideshow: {
+    start: {
         type: Boolean,
         default: false
     },

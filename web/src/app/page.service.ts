@@ -27,6 +27,15 @@ export class PageService {
                .catch(this.handleError);
   }
 
+  // get("/api/pages/show?start=1")
+  getStartPage(): Promise<Page> {
+    const getUrl = this.pagesUrl + '/show?start=1';
+    return this.http.get(getUrl)
+               .toPromise()
+               .then(response => response.json() as Page)
+               .catch(this.handleError);
+  }
+
   private handleError (error: any) {
     const errMsg = (error.message) ? error.message :
     error.status ? `${error.status} - ${error.statusText}` : `Server error`;

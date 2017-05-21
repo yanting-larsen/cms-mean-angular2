@@ -35,19 +35,11 @@ export class PageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageService
-      .getPage(this.url)
-      .then((page: Page) => {
-        this.header = page.header;
-        this.contents = page.content.split('\n');
-        this.displaySlideshow = page.slideshow;
-      }).catch(() => {
-        this.header = 'Page Not Found';
-        this.contents = [
-          'The page you are looking for could not be found.'
-        ];
-        this.displaySlideshow = false;
-      });
+    if (this.url === '/') {
+      this.getStartPage();
+    } else {
+      this.getPage(this.url);
+    }
   }
 
   private initSlides() {
@@ -56,5 +48,33 @@ export class PageComponent implements OnInit {
       { image: 'http://static.hasselblad.com/uploads/2014/11/Maasai-Woman4-666x1000.jpg' },
       { image: 'http://static.hasselblad.com/uploads/2014/11/B_0127-copy-749x1000.jpg' }
     );
+  }
+
+  private getPage(url: String) {
+    this.pageService
+      .getPage(url)
+      .then((page: Page) => {
+        this.header = page.header;
+        this.contents = page.content.split('\n');
+        this.displaySlideshow = page.start;
+      }).catch(this.pageNotFound);
+  }
+
+  private getStartPage() {
+    this.pageService
+      .getStartPage()
+      .then((page: Page) => {
+        this.header = page.header;
+        this.contents = page.content.split('\n');
+        this.displaySlideshow = page.start;
+      }).catch(this.pageNotFound);
+  }
+
+  private pageNotFound() {
+    this.header = 'Page Not Found';
+    this.contents = [
+      'The page you are looking for could not be found.'
+    ];
+    this.displaySlideshow = false;
   }
 }

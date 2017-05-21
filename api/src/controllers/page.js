@@ -27,7 +27,7 @@ function create (req, res, next) {
         parentId: parentId,
         visible: req.body.visible,
         menu: req.body.menu,
-        slideshow: req.body.slideshow
+        start: req.body.start
     }).then((savedPage) => {
         return res.json(savedPage);
     }, (err) => next(err));
@@ -73,8 +73,18 @@ function navigation(req, res, next) {
 
 function show(req, res, next) {
     const slug = req.query.slug;
+    const start = req.query.start;
+    let query = {
+        visible: true
+    }
 
-    Page.findOne({ visible: true, slug: slug })
+    if (start) {
+        query.start = true;
+    } else {
+        query.slug = slug;
+    }
+
+    Page.findOne(query)
         .then((page) => {
             if (page) {
                 return res.json(page);
