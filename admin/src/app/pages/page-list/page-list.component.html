@@ -6,7 +6,7 @@
           *ngFor="let page of pages"
           (click)="selectPage(page)"
           [class.active]="page === selectedPage">
-          {{page.name}}
+          {{ page.prefix }} {{ page.name }}
         </li>
     </ul>
     <button class="btn btn-warning" (click)="createNewPage()">New</button>

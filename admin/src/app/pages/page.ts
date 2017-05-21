@@ -1,5 +1,6 @@
 export class Page {
   _id?: string;
+  prefix?: string;
   name: string;
   header: string;
   content: string;

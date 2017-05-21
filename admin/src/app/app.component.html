@@ -1,21 +1,46 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-2 pl-0 pr-0 collapse show in" id="sidebar">
-      <div class="list-group panel">
-        <a class="nav-link list-group-item" [routerLink]="['/']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-file-text"></i> <span class="hidden-sm-down">Pages</span></a>
-        <a class="nav-link list-group-item" [routerLink]="['/settings']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-cog"></i> <span class="hidden-sm-down">Settings</span></a>
-        <a class="nav-link list-group-item" [routerLink]="['/admins']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-user"></i> <span class="hidden-sm-down">Admins</span></a>
-        <a class="nav-link list-group-item" [routerLink]="['/slides']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-film"></i> <span class="hidden-sm-down">Slides</span></a>
-        <a class="nav-link list-group-item" [routerLink]="['/login']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><i class="fa fa-sign-out"></i> <span class="hidden-sm-down">Logout</span></a>
+<div id="wrapper" class="toggled">
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li>
+        <a [routerLink]="['/']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <i class="fa fa-file-text"></i>
+          <span>Pages</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/settings']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <i class="fa fa-cog"></i>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/admins']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <i class="fa fa-user"></i>
+          <span>Admins</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/slides']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <i class="fa fa-film"></i>
+          <span>Slides</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/login']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <i class="fa fa-sign-out"></i>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <router-outlet></router-outlet>
+        </div>
       </div>
     </div>
-
-    <main class="col-md-10 pl-2 pt-2 offset-md-2">
-      <button class="btn" type="button" data-toggle="collapse" data-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
-        <i class="fa fa-bars"></i>
-      </button>
-      <hr>
-      <router-outlet></router-outlet>
-    </main>
   </div>
 </div>

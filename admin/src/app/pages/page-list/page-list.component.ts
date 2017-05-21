@@ -19,7 +19,10 @@ export class PageListComponent implements OnInit {
     this.pageService
       .getPages()
       .then((pages: Page[]) => {
-        this.pages = pages;
+        this.pages = pages.map((page) => {
+          const prefix = Array(this.pageLevel(page)).join(" ");
+          return Object.assign(page, { prefix: prefix });
+        });
       });
   }
 
@@ -27,6 +30,10 @@ export class PageListComponent implements OnInit {
     return this.pages.findIndex((page) => {
       return page._id === pageId;
     });
+  }
+
+  pageLevel(page: Page): number {
+    return page.path.split('/').length - 1;
   }
 
   selectPage(page: Page) {
@@ -74,5 +81,4 @@ export class PageListComponent implements OnInit {
     }
     return this.pages;
   }
-
 }
