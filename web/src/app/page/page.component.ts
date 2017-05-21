@@ -65,20 +65,30 @@ export class PageComponent implements OnInit {
     this.pageService
       .getPage(url)
       .then((page: Page) => {
+        if (!page) {
+          this.pageNotFound();
+          return;
+        }
+
         this.header = page.header;
         this.contents = page.content.split('\n');
         this.displaySlideshow = page.start;
-      }).catch(this.pageNotFound);
+      });
   }
 
   private getStartPage() {
     this.pageService
       .getStartPage()
       .then((page: Page) => {
+        if (!page) {
+          this.pageNotFound();
+          return;
+        }
+
         this.header = page.header;
         this.contents = page.content.split('\n');
         this.displaySlideshow = page.start;
-      }).catch(this.pageNotFound);
+      });
   }
 
   private pageNotFound() {
