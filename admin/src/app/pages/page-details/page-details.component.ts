@@ -8,6 +8,7 @@ import { PageService } from '../page.service';
   styleUrls: ['./page-details.component.css']
 })
 export class PageDetailsComponent implements OnInit {
+  @Input()
   pages: Page[];
 
   @Input()
@@ -40,11 +41,5 @@ export class PageDetailsComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.pageService
-      .getPages()
-      .then((pages: Page[]) => {
-        this.pages = pages;
-      });
-  }
+  ngOnInit() { }
 }
