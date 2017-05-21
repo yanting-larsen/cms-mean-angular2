@@ -1,15 +1,10 @@
-<a (click)="selectPageHandler(page)"
-  [class.active]="page === selectedPage">
-  {{ page.name }}
-</a>
+<a>{{ page.name }}</a>
 <ul *ngIf="getMenu(page._id)">
   <li *ngFor="let node of getMenu(page._id)">
     <app-tree-node
      [page]="node"
      [pageMap]="pageMap"
-     [getMenu]="getMenu"
-     [selectedPage]="selectedPage"
-     [selectPageHandler]="selectPageHandler">
+     [getMenu]="getMenu">
     </app-tree-node>
   </li>
 </ul>

@@ -11,8 +11,6 @@ import { NavigationService } from './navigation.service';
 export class NavigationComponent implements OnInit {
   pageMap: Map<String, Page[]> = new Map<string, Page[]>();
 
-  selectedPage: Page;
-
   constructor(private navService: NavigationService) { }
 
   ngOnInit() {
@@ -29,10 +27,6 @@ export class NavigationComponent implements OnInit {
           this.pageMap.get(key).push(page);
         }
       });
-  }
-
-  selectPage(page: Page) {
-    this.selectedPage = page;
   }
 
   getMenu(pageId?: String): Page[] {

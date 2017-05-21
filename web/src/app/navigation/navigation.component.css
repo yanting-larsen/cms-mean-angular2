@@ -26,6 +26,9 @@
   z-index: 100;
 }
 
+/*
+ * Apply the style to the app-tree-node component from the parent
+ */
 :host >>> .primary-nav li:hover app-tree-node ul {
   display: block;
 }

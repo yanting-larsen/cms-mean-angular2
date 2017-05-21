@@ -8,7 +8,6 @@ import { SlideshowComponent } from './slideshow/slideshow.component';
 import { SlideComponent } from './slideshow/slide/slide.component';
 import { PageComponent } from './page/page.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { FooterComponent } from './footer/footer.component';
 import { TreeNodeComponent } from './navigation/tree-node/tree-node.component';
 
 @NgModule({
@@ -18,7 +17,6 @@ import { TreeNodeComponent } from './navigation/tree-node/tree-node.component';
     SlideComponent,
     PageComponent,
     NavigationComponent,
-    FooterComponent,
     TreeNodeComponent
   ],
   imports: [

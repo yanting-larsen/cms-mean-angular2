@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Page } from '../../page';
 
 @Component({
@@ -6,7 +6,7 @@ import { Page } from '../../page';
   templateUrl: './tree-node.component.html',
   styleUrls: ['./tree-node.component.css']
 })
-export class TreeNodeComponent implements OnInit {
+export class TreeNodeComponent {
   @Input()
   page: Page;
 
@@ -23,8 +23,4 @@ export class TreeNodeComponent implements OnInit {
   selectPageHandler: Function;
 
   constructor() { }
-
-  ngOnInit() {
-  }
-
 }

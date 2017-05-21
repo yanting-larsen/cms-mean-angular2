@@ -1,40 +1,11 @@
 <nav class="primary-nav-wrap">
   <ul class="tabs primary-nav">
-<!--
-    <li><app-tree-node [node]="node">{{ node }}</app-tree-node></li>
-  </ul>
--->
     <li *ngFor="let page of getMenu()">
       <app-tree-node
        [page]="page"
        [pageMap]="pageMap"
-       [getMenu]="getMenu"
-       [selectedPage]="selectedPage"
-       [selectPageHandler]="selectPage">
+       [getMenu]="getMenu">
       </app-tree-node>
     </li>
-
-<!--
-    <li><a href="#plans">Plans</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#jobs">Jobs</a>
-      <ul>
-        <li><a href="#">Frontend</a>
-          <ul>
-            <li><a href="#">JavaScript</a></li>
-            <li><a href="#">HTML</a></li>
-            <li><a href="#">CSS</a></li>
-          </ul>
-        </li>
-        <li><a href="#">Backend</a>
-          <ul>
-            <li><a href="#">Java</a></li>
-            <li><a href="#">PHP</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-!-->
   </ul>
 </nav>

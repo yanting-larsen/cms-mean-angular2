@@ -13,10 +13,9 @@
 
     <div class="form-group">
       <label for="settings-footer">Footer</label>
-      <input class="form-control" name="settings-footer" [(ngModel)]="settings.footer" placeholder="Footer" />
+      <textarea class="form-control" name="settings-footer" [(ngModel)]="settings.footer" placeholder="Footer"></textarea>
     </div>
 
     <button class="btn btn-info" (click)="updateSettings(settings)">Update</button>
-
   </form>
 </div>

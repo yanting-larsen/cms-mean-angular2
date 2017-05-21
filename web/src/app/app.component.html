@@ -17,4 +17,11 @@
   </main>
 </div>
 
-<app-footer></app-footer>
+<footer>
+  <ul>
+    <li *ngIf="companyName">{{ companyName }}</li>
+    <li *ngFor="let item of footerItems">
+      {{ item }}
+    </li>
+  </ul>
+</footer>
